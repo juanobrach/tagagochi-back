@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+
+}
+
+generator nestgraphql {
+  provider = "node node_modules/prisma-nestjs-graphql"
+  output   = "../src/@generated/prisma-nestjs-graphql"
+}
+
+datasource DS {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int                @id @default(autoincrement())
+  name             String             @unique
+  userMissionTrack UserMissionTrack[]
+}
+
+model Mission {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  UserMissionTrack UserMissionTrack[]
+}
+
+model UserMissionTrack {
+  id        Int      @id @default(autoincrement())
+  missionId Int
+  createdAt DateTime @default(now())
+  score     Int
+  mission   Mission  @relation(fields: [missionId], references: [id])
+
+
+
+  User   User? @relation(fields: [userId], references: [id])
+  userId Int?
+}

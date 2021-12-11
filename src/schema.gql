@@ -1,0 +1,50 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type MissionCount {
+  UserMissionTrack: Int!
+}
+
+type Mission {
+  id: ID!
+  name: String!
+  UserMissionTrack: [UserMissionTrack!]
+  _count: MissionCount!
+}
+
+type UserMissionTrack {
+  id: ID!
+  missionId: Int!
+  createdAt: DateTime!
+  score: Int!
+  mission: Mission!
+  User: User
+  userId: Int
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UserCount {
+  userMissionTrack: Int!
+}
+
+type User {
+  id: ID!
+  name: String!
+  userMissionTrack: [UserMissionTrack!]
+  _count: UserCount!
+}
+
+type Query {
+  getUsers: [User!]!
+  getAllMissions: [Mission!]!
+}
+
+type Mutation {
+  create: User!
+  createMissions: Mission!
+}
